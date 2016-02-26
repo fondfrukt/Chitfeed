@@ -36,7 +36,7 @@ fruitStory.service('Types', function () {
         },
         designFace:{
             type:'designFace',
-            title:'Лицо затеи'
+            title:'Затейщик'
         },
         donation:{
             type:'donation',
