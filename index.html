@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Ленты</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#9CC2CE">
+
+    <script src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
+    <script src="js/side/angular.min.js"></script>
+    <script type="application/javascript" src="js/helpers.js"></script>
+    <script type="application/javascript" src="js/side/angular-ui-router.js"></script>
+    <script type="application/javascript" src="js/side/FireUser.js"></script>
+    <script type="application/javascript" src="js/side/marked.js"></script>
+    <script type="application/javascript" src="js/side/angular-marked.js"></script>
+    <script type="application/javascript" src="js/side/prefixfree.min.js"></script>
+    <script type="application/javascript" src="js/side/ngStorage.js"></script>
+    <script type="application/javascript" src="js/feeds-app.js"></script>
+    <script type="application/javascript" src="js/directives/feed.js"></script>
+    <script type="application/javascript" src="js/directives/directives.js"></script>
+    <script type="application/javascript" src="js/services/types.js"></script>
+    <script type="application/javascript" src="js/side/firebase.js"></script>
+    <script type="application/javascript" src="js/side/angularfire.min.js"></script>
+    <script type="application/javascript" src="js/side/firebase-simple-login.js"></script>
+    <script type="application/javascript" src="js/side/bind-polyfill.js"></script>
+    <script type="application/javascript" src="js/side/angular-smooth-scroll.js"></script>
+    <script type="application/javascript" src="js/side/loading-bar.js"></script>
+    <script type="application/javascript" src="js/side/ng-videosharing-embed.min.js"></script>
+    <script type="application/javascript" src="js/side/moment-with-locales.js"></script>
+    <script type="application/javascript" src="js/side/angular-adaptive-googlemaps.js"></script>
+    <script type="application/javascript" src="js/side/angular-moment.js"></script>
+    <link href="css/story.css" rel="stylesheet">
+    <link href="css/gridforms.css" rel="stylesheet">
+    <link href="css/loading-bar.css" rel="stylesheet">
+
+</head>
+<body data-ng-app="fruitStory" data-ng-controller="feeds" data-ng-cloak>
+
+<section id="header">
+
+    <div id="status">
+        <div class="status-connecting"
+             title="Отправлен запрос серверу"
+             ng-if="!status.publicLoaded && !status.online">Подключение...</div>
+        <div class="status-loading"
+             title="Скачивание данных"
+             ng-if="!status.ready && status.online">Загрузка...</div>
+        <div class="status-online"
+             title="Онлайн"
+             ng-if="status.ready && status.online">&bull;</div>
+
+        <div class="status-offline"
+             title="Оффлайн"
+             ng-if="status.publicLoaded && !status.online">&bull;</div>
+            </div>
+
+    <a ui-sref="feed"> <div class="logo"></div></a>
+
+
+
+    <button
+            class="header-button"
+            ng-class="{active:$state.includes('public')}"
+            >
+        <a ui-sref="public.feed">Публичные</a>
+
+    </button>
+
+
+    <button
+            class="header-button"
+            ng-class="{active:$state.includes('personal')}"
+            ><a ui-sref="personal.feed">Личные</a></button>
+
+    <div class="auth">
+
+    <button ng-if="!mtd.logging && !mtd.creating && !data.userLoggedIn"
+            class="header-button"
+            ng-click="mtd.logging=1">Войти</button>
+    <button ng-if="!mtd.logging && !mtd.creating && !data.userLoggedIn"
+            class="header-button"
+            ng-click="mtd.creating=1">Представиться</button>
+
+
+
+    <div class="auth auth-name"
+         ng-style="{color:mtd.colorize(mtd.personae[data.userInfo.md5_hash].letters)}"
+         ng-if="data.userLoggedIn">
+        {{mtd.personae[data.userInfo.md5_hash].title}}
+         </div>
+
+    <div fuLoginForm
+         mtd="mtd"
+         class="auth"
+         data-ng-if="!data.userLoggedIn && mtd.logging"></div>
+
+
+    <div fuLogOut
+         class="header-button auth"
+         data-ng-if="data.userLoggedIn"></div>
+
+    <div fuSignUpForm
+         mtd="mtd"
+         class="auth sign-up"
+         data-ng-if="!data.userLoggedIn && mtd.creating"></div>
+
+</div>
+
+
+</section>
+<section ui-view></section>
+
+</section>
+
+</body>
+</html>

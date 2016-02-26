@@ -1,0 +1,34 @@
+
+<div class="card-holder"
+     data-ng-class="{'box-holder':selected!=phrase.letters, 'box-wider':mtd.isSelected(phrase.letters)}"
+     data-ng-repeat="phrase in next | objectAsArray | filter: rf | filter: lettersFilter | filter:search | orderBy:[rate.ratingSort, rate.seenSort, rate.timeSort]">
+
+    <div card
+         mtd="mtd"
+         phrase="phrase"
+         rate="rate"
+         rf="rf"
+         selected="selected"
+         class="card-stack"
+         nxt="nxt"
+         edit="next"></div>
+
+</div>
+<div plus
+     class="box-plus"
+     data-ng-if="mtd.persona && !next && type!='personal'"
+     data-ng-click="$parent.next={new:{letters:phrase.letters}}" ></div>
+
+<div plus
+     class="box-plus"
+     data-ng-if="mtd.persona && next && !next.new && type!='personal'"
+     data-ng-click="next.new={letters:phrase.letters}" ></div>
+
+<div add-form
+     data-ng-if="mtd.persona && next.new"
+     phrase="next.new"
+     address="addr"
+     close="cancelNew()"
+     used="used"
+     type="type"
+     mtd="mtd"></div>

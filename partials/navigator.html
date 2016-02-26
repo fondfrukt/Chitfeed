@@ -1,0 +1,23 @@
+
+<a class="no-underline" href="#" duration="50" scroll-to="header">
+        <div class="nav-to-top">&uparrow;</div>
+
+</a>
+    <div class="nav-block"
+         data-ng-repeat="letters in mtd.selected">
+        <a class="no-underline" duration="50"  scroll-to="{{letters}}">
+            <div class="letters">
+                 <span
+                         data-ng-repeat="lttr in cleanLetters(letters) track by $index"
+                         data-ng-style="{backgroundColor:mtd.colorize(lttr)}"
+                         class="letter nav-letter"
+                         data-ng-click="select()">
+                    <span ng-if="mtd.showLetters">{{lttr}}</span>
+                 </span>
+                {{mtd.selector}}
+                <span class="nav-close" data-ng-click="mtd.selector(letters)">&times;</span>
+            </div>
+        </a>
+    </div>
+
+

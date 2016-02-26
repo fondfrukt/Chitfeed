@@ -1,0 +1,111 @@
+<form action="" class="grid-form flex-form">
+
+    <fieldset>
+        <legend>Добавить высказывание: </legend>
+
+        <div data-row-span="1">
+            <div data-field-span="1">
+                <label ng-if="!mtd.showLetters">Цвет</label>
+                <label ng-if="mtd.showLetters">Буквы</label>
+                <div letters
+                     letter="address"
+                     mtd="mtd"
+                     class="letters lefter"></div>
+
+
+
+
+                <div letter-grid
+                     used="used"
+                     mtd="mtd"
+                     result="letter"
+                     class="letter-grid"
+                        >
+
+                </div>
+
+
+            </div>
+        </div>
+        <div data-row-span="1">
+            <div data-field-span="1">
+                <label>Тип</label>
+                <select
+                    ng-model="phrase.type"
+                    name="Тип"
+                    required
+                    ng-options="type.type as type.title for (typeName, type) in mtd.types[type].canHave"></select>
+            </div>
+        </div>
+
+        <div data-row-span="1">
+            <div data-field-span="1">
+                <label>Название</label>
+                <input  name="title"
+                        required
+                        autofocus="1"
+                        data-ng-model="phrase.title"
+                        type="text">
+            </div>
+        </div>
+        <div data-row-span="1">
+            <div data-field-span="1">
+                <label>Чем наполним?</label>
+                <button class="btn" ng-class="{active:addImg || phrase.img}" ng-click="addImg=!addImg">Картинка</button>
+                <button class="btn" ng-class="{active:addVideo || phrase.video}" ng-click="addVideo=!addVideo">Видео</button>
+                <button class="btn" ng-class="{active:addText || phrase.text}" ng-click="addText=!addText">Текст</button>
+            </div>
+        </div>
+        <div ng-if="phrase.type=='place' || phrase.place && phrase.place.address" data-row-span="4">
+            <div data-field-span="3">
+                <label>Адрес</label>
+                <input data-ng-model="phrase.place.address"
+                       type="text">
+
+            </div>
+            <div data-field-span="1">
+
+                <label>Приближение</label>
+                <input data-ng-model="phrase.place.zoom"
+                       type="number">
+            </div>
+        </div>
+        <div ng-if="phrase.type=='time' || phrase.date" data-row-span="1">
+            <div data-field-span="1">
+                <label>Время</label>
+                <input type="dateTime-Local" ng-model="add.dateTime" ng-change="add.refreshDate()">
+            </div>
+
+
+        </div>
+        <div ng-if="addImg || phrase.img" data-row-span="1">
+            <div data-field-span="1">
+                <label>URL картинки</label>
+                <input data-ng-model="phrase.img"
+                       type="text">
+            </div>
+        </div>
+        <div ng-if="addVideo || phrase.video" data-row-span="1">
+            <div data-field-span="1">
+                <label>URL видео на Youtube.com, Vimeo.com</label>
+                <input data-ng-model="phrase.video"
+                       type="text">
+            </div>
+        </div>
+        <div ng-if="addText  || phrase.text" data-row-span="1">
+            <div data-field-span="1">
+                <label>Текст (с разметкой <b><a href="http://ru.wikipedia.org/wiki/Markdown" target="_blank" title="markdown">MARKDOWN</a></b>)</label>
+                <textarea class="texter"
+                          data-ng-model="phrase.text"></textarea>
+            </div>
+        </div>
+    </fieldset>
+    <button ng-disabled="!phrase.letters && !phrase.type"
+            type="submit"
+            value="+"
+            class="form-button add"
+            data-ng-style="{backgroundColor:mtd.colorize(phrase.letters)}"
+            data-ng-click="mtd.addToFeed(phrase);close()">+</button>
+    <button class="form-button cancel"
+            data-ng-click="close()">&times;</button>
+</form>

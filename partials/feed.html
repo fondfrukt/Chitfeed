@@ -1,0 +1,50 @@
+<section id="filterSection">
+
+    <menu
+            filters
+            id="filters">
+
+    </menu>
+</section>
+
+<section ng-if="mtd.viewType" id="types">
+    <button ng-repeat="type in mtd.types | objectAsArray"
+            icon
+            icon-title="type.title"
+            icon-text="type.text"
+            icon-type="type.type"
+            icon-color="type.color"
+            ng-style="{borderColor:mtd.viewType==type.type && type.color}"
+            class="type-button button-icon"
+            ng-class="{active:mtd.viewType==type.type}"
+            ng-click="mtd.viewType=type.type">
+
+    </button>
+</section>
+<section ng-if="contents" id="contents">
+    <contents
+            class="contents"
+            tree="tree"
+            mtd="mtd"></contents>
+</section>
+<section navigator
+         id="navigator">
+
+</section>
+<section  id="first">
+
+    <div cards
+         ng-if="source"
+         search="search"
+         rf="rate.ratingFilter"
+         fltr="fltr"
+         mtd="mtd"
+         rate="rate"
+         next="source"
+         selected="selected"
+         class="container"
+         type="feedTitle"
+            ></div>
+
+</section>
+
