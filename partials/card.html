@@ -21,13 +21,7 @@
 
 
 
-         <div rating
-         data-ng-if="mtd.showRating"
-         class="box-rate"
-         rate="rate"
-         mtd="mtd"
-         letter="phrase.letters">
-             </div>
+
          </div>
 
         <a class="header-scroll-link" duration="10" data-ng-click="mtd.selector(phrase.letters)" scroll-to="{{phrase.letters}}">
@@ -75,7 +69,7 @@
 
                 <button class="btn"
                         ng-click="edit.new=phrase; edit.new.edit=true">Изменить</button>
-    
+
 
             </div>
 
@@ -159,3 +153,11 @@
 -->
 
 </div>
+
+<div rating
+data-ng-if="mtd.showRating"
+class="box-rate"
+rate="rate"
+mtd="mtd"
+letter="phrase.letters">
+    </div>
