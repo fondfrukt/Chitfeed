@@ -3,6 +3,7 @@
  */
 var fruitStory = angular.module('fruitStory',['hc.marked', 'smoothScroll','firebase', 'ngStorage', 'cfp.loadingBar', 'fireUser','ui.router', 'videosharing-embed', 'angularMoment', 'adaptive.googlemaps']);
 var controllers = {};
+var firebaseMainLink = ' https://chitfeed.firebaseio.com';
 
 fruitStory.run(function(amMoment){
     amMoment.changeLocale('ru');
@@ -23,7 +24,7 @@ fruitStory.run(
 )
 
 angular.module('fireUser').value('FireUserConfig', {
-    url:'https://chitfeed.firebaseio.com/'
+    url:firebaseMainLink
 });
 
 fruitStory.config(
@@ -105,7 +106,7 @@ controllers.personal = function ($scope, $localStorage, $firebase, cfpLoadingBar
 
     //personal feed
 
-    $scope.personalFeed=$firebase(new Firebase('https://chitfeed.firebaseio.com/personal/feed')).$asArray();
+    $scope.personalFeed=$firebase(new Firebase(firebaseMainLink + '/personal/feed')).$asArray();
     $scope.personalFeed.$loaded().then(function () {
         $scope.status.personalLoaded=true;
 
@@ -117,12 +118,12 @@ controllers.personal = function ($scope, $localStorage, $firebase, cfpLoadingBar
 
     // personal ratings
 
-    personalRatingSync = $firebase(new Firebase('https://chitfeed.firebaseio.com/personal/rating'));
+    personalRatingSync = $firebase(new Firebase(firebaseMainLink + '/personal/rating'));
 
     //personal rates
 
     $scope.mtd.personalRates={};
-    var personalRatesSync = $firebase(new Firebase('https://chitfeed.firebaseio.com/personal/rates'));
+    var personalRatesSync = $firebase(new Firebase(firebaseMainLink + '/personal/rates'));
 
 
     if ($scope.mtd.publicRating) {
@@ -162,12 +163,12 @@ controllers.public = function ($scope, $localStorage, $firebase, cfpLoadingBar, 
 
     // public ratings
 
-    var ratingSync = $firebase(new Firebase('https://chitfeed.firebaseio.com/public/rating'));
+    var ratingSync = $firebase(new Firebase(firebaseMainLink + '/public/rating'));
     $scope.fireRating=ratingSync.$asObject();
 
     //public feed
 
-    $scope.mtd.publicFeed=$firebase(new Firebase('https://chitfeed.firebaseio.com/public/feed'));
+    $scope.mtd.publicFeed=$firebase(new Firebase(firebaseMainLink + '/public/feed'));
     $scope.publicFeed=$scope.mtd.publicFeed.$asArray();
     $scope.publicFeed.$loaded().then(function () {
         //  $scope.mtd.switchToPublic();
@@ -179,7 +180,7 @@ controllers.public = function ($scope, $localStorage, $firebase, cfpLoadingBar, 
     //public rates
 
     $scope.mtd.publicRates={};
-    var ratesSync = $firebase(new Firebase('https://chitfeed.firebaseio.com/public/rates'));
+    var ratesSync = $firebase(new Firebase(firebaseMainLink + '/public/rates'));
 
 
     if ($scope.mtd.personalRating) {
@@ -279,7 +280,7 @@ controllers.feeds = function ($rootScope, $scope, Types, $localStorage, $firebas
     });
 
 
-    $scope.mtd.personae=$firebase(new Firebase('https://chitfeed.firebaseio.com/personae')).$asObject();
+    $scope.mtd.personae=$firebase(new Firebase(firebaseMainLink + '/personae')).$asObject();
 
     $scope.$on('fireuser:user_created', function (data, user) {
         var persona = {
@@ -318,7 +319,7 @@ controllers.feeds = function ($rootScope, $scope, Types, $localStorage, $firebas
     $scope.status.online=false;
 
 
-    var connectedRef = new Firebase("https://chitfeed.firebaseio.com/.info/connected");
+    var connectedRef = new Firebase(firebaseMainLink + "/.info/connected");
     connectedRef.on("value", function(snap) {
         if (snap.val() === true) {
             $scope.status.online=true;
@@ -330,7 +331,7 @@ controllers.feeds = function ($rootScope, $scope, Types, $localStorage, $firebas
 
     // authentication connection
 
-    $scope.auth=$firebaseSimpleLogin(new Firebase('https://chitfeed.firebaseio.com/'));
+    $scope.auth=$firebaseSimpleLogin(new Firebase(firebaseMainLink));
 
 
 
